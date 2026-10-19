@@ -1,0 +1,30 @@
+enable
+configure terminal
+hostname BRANCH
+interface GigabitEthernet0/0
+ description TO-PRIMARY
+ ip address 10.0.1.1 255.255.255.252
+ ip ospf cost 10
+ no shutdown
+exit
+interface GigabitEthernet0/1
+ description TO-BACKUP
+ ip address 10.0.2.1 255.255.255.252
+ ip ospf cost 50
+ no shutdown
+exit
+interface GigabitEthernet0/2
+ description BRANCH-LAN
+ ip address 10.50.10.1 255.255.255.0
+ no shutdown
+exit
+router ospf 1
+ router-id 1.1.1.1
+ passive-interface GigabitEthernet0/2
+ network 10.0.1.0 0.0.0.3 area 0
+ network 10.0.2.0 0.0.0.3 area 0
+ network 10.50.10.0 0.0.0.255 area 0
+exit
+ip route 10.60.10.10 255.255.255.255 10.0.1.2
+end
+copy running-config startup-config

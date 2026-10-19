@@ -1,0 +1,22 @@
+enable
+configure terminal
+hostname BACKUP
+interface GigabitEthernet0/0
+ description TO-BRANCH
+ ip address 10.0.2.2 255.255.255.252
+ ip ospf cost 50
+ no shutdown
+exit
+interface GigabitEthernet0/1
+ description TO-DATACENTER
+ ip address 10.0.4.1 255.255.255.252
+ ip ospf cost 50
+ no shutdown
+exit
+router ospf 1
+ router-id 3.3.3.3
+ network 10.0.2.0 0.0.0.3 area 0
+ network 10.0.4.0 0.0.0.3 area 0
+exit
+end
+copy running-config startup-config

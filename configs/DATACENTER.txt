@@ -1,0 +1,29 @@
+enable
+configure terminal
+hostname DATACENTER
+interface GigabitEthernet0/0
+ description TO-PRIMARY
+ ip address 10.0.3.2 255.255.255.252
+ ip ospf cost 10
+ no shutdown
+exit
+interface GigabitEthernet0/1
+ description TO-BACKUP
+ ip address 10.0.4.2 255.255.255.252
+ ip ospf cost 50
+ no shutdown
+exit
+interface GigabitEthernet0/2
+ description SERVER-LAN
+ ip address 10.60.10.1 255.255.255.0
+ no shutdown
+exit
+router ospf 1
+ router-id 4.4.4.4
+ passive-interface GigabitEthernet0/2
+ network 10.0.3.0 0.0.0.3 area 0
+ network 10.0.4.0 0.0.0.3 area 0
+ network 10.60.10.0 0.0.0.255 area 0
+exit
+end
+copy running-config startup-config

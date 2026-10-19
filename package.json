@@ -1,0 +1,13 @@
+{
+  "name": "green-status-red-checkout",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A reproducible PingMyNetwork OSPF failover troubleshooting lab",
+  "scripts": {
+    "build": "node scripts/build-lab.js",
+    "check": "node scripts/build-lab.js --check"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
